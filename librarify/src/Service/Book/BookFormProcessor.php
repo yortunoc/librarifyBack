@@ -3,10 +3,13 @@
 namespace App\Service\Book;
 
 use App\Entity\Book;
+use App\Entity\Book\Score;
+use App\Entity\Category;
 use App\Form\Model\BookDto;
 use App\Form\Model\CategoryDto;
 use App\Form\Type\BookFormType;
 use App\Repository\BookRepository;
+use App\Repository\CategoryRepository;
 use App\Service\Category\CreateCategory;
 use App\Service\Category\GetCategory;
 use App\Service\FileUploader;
@@ -25,14 +28,13 @@ class BookFormProcessor
     private FormFactoryInterface $formFactory;
 
     public function __construct(
-        GetBook              $getBook,
-        BookRepository       $bookRepository,
-        GetCategory          $getCategory,
-        CreateCategory       $createCategory,
-        FileUploader         $fileUploader,
+        GetBook $getBook,
+        BookRepository $bookRepository,
+        GetCategory $getCategory,
+        CreateCategory $createCategory,
+        FileUploader $fileUploader,
         FormFactoryInterface $formFactory
-    )
-    {
+    ) {
         $this->getBook = $getBook;
         $this->bookRepository = $bookRepository;
         $this->createCategory = $createCategory;
@@ -45,8 +47,7 @@ class BookFormProcessor
     {
         $book = null;
         $bookDto = null;
-        /** @var CategoryDto[]|ArrayCollection */
-        $originalCategories = new ArrayCollection();
+
         if ($bookId === null) {
             $book = Book::create();
             $bookDto = BookDto::createEmpty();
@@ -54,9 +55,7 @@ class BookFormProcessor
             $book = ($this->getBook)($bookId);
             $bookDto = BookDto::createFromBook($book);
             foreach ($book->getCategories() as $category) {
-                $categoryDto = CategoryDto::createFromCategory($category);
-                $bookDto->categories[] = $categoryDto;
-                $originalCategories->add($categoryDto);
+                $bookDto->categories[] = CategoryDto::createFromCategory($category);
             }
         }
 
@@ -69,32 +68,29 @@ class BookFormProcessor
             return [null, $form];
         }
 
-        // Remove categories
-        foreach ($originalCategories as $originalCategoryDto) {
-            if (!\in_array($originalCategoryDto, $bookDto->categories)) {
-                $category = ($this->getCategory)($originalCategoryDto->getId());
-                $book->removeCategory($category);
+        $categories = [];
+        foreach ($bookDto->getCategories() as $newCategoryDto) {
+            $category = null;
+            if ($newCategoryDto->getId() !== null) {
+                $category = ($this->getCategory)($newCategoryDto->getId());
             }
+            if ($category === null) {
+                $category = ($this->createCategory)($newCategoryDto->getName());
+            }
+            $categories[] = $category;
         }
 
-        // Add categories
-        foreach ($bookDto->getCategories() as $newCategoryDto) {
-            if (!$originalCategories->contains($newCategoryDto)) {
-                $category = null;
-                if ($newCategoryDto->getId() !== null) {
-                    $category = ($this->getCategory)($newCategoryDto->getId());
-                }
-                if (!$category) {
-                    $category = ($this->createCategory)($newCategoryDto->getName());
-                }
-                $book->addCategory($category);
-            }
-        }
-        $book->setTitle($bookDto->title);
-        if ($bookDto->base64Image) {
+        $filename = null;
+        if ($bookDto->getBase64Image()) {
             $filename = $this->fileUploader->uploadBase64File($bookDto->base64Image);
-            $book->setImage($filename);
         }
+        $book->update(
+            $bookDto->getTitle(),
+            $filename,
+            $bookDto->getDescription(),
+            Score::create($bookDto->getScore()),
+            ...$categories
+        );
         $this->bookRepository->save($book);
         return [$book, null];
     }

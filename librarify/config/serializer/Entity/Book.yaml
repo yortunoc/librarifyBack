@@ -8,3 +8,7 @@ App\Entity\Book:
       groups: [ 'book' ]
     categories:
       groups: [ 'book' ]
+    description:
+      groups: [ 'book' ]
+    score:
+      groups: [ 'book' ]

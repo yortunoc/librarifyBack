@@ -3,24 +3,32 @@ App\Entity\Book:
     table: book
     repositoryClass: App\Repository\BookRepository
     id:
-      id:
-        type: uuid
-
+        id:
+            type: uuid
     fields:
         title:
             type: string
-            scale: null
+            scale: 0
             length: 255
             unique: false
             nullable: false
-            precision: null
+            precision: 0
         image:
             type: string
-            scale: null
+            scale: 0
             length: 512
             unique: false
             nullable: true
-            precision: null
+            precision: 0
+        description:
+            type: text
+            scale: 0
+            unique: false
+            nullable: true
+            precision: 0
+    embedded:
+        score:
+            class: App\Entity\Book\Score
     manyToMany:
         categories:
             targetEntity: App\Entity\Category

@@ -9,10 +9,14 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class BookNormalizer implements ContextAwareNormalizerInterface
 {
-    private $urlHelper;
-    private $normalizer;
 
-    public function __construct(ObjectNormalizer $normalizer, UrlHelper $urlHelper) {
+    private ObjectNormalizer $normalizer;
+    private UrlHelper $urlHelper;
+
+    public function __construct(
+        ObjectNormalizer $normalizer,
+        UrlHelper $urlHelper
+    ) {
         $this->normalizer = $normalizer;
         $this->urlHelper = $urlHelper;
     }
@@ -28,7 +32,7 @@ class BookNormalizer implements ContextAwareNormalizerInterface
         return $data;
     }
 
-    public function supportsNormalization($data, $format = null, array $context = []): bool
+    public function supportsNormalization($data, $format = null, array $context = [])
     {
         return $data instanceof Book;
     }

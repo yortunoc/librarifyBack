@@ -29,6 +29,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+#         - { path: ^/api/(get)$, roles: ROLE_MEMBER }
+#         - { path: ^/api/(post)/\d+$, roles: ROLE_MEMBER }
          - { path: ^/api, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }
 

@@ -254,6 +254,20 @@
       <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/willdurand/jsonp-callback-validator" />
       <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/willdurand/negotiation" />
+      <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/knplabs/knp-menu" />
+      <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/knplabs/knp-menu-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/sonata-project/admin-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/sonata-project/block-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/sonata-project/doctrine-extensions" />
+      <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/sonata-project/doctrine-orm-admin-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/sonata-project/exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/sonata-project/form-extensions" />
+      <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/sonata-project/twig-extensions" />
+      <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/symfony/asset" />
+      <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/symfony/expression-language" />
+      <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/symfony/security-acl" />
+      <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/symfony/translation" />
+      <excludeFolder url="file://$MODULE_DIR$/librarify/vendor/twig/string-extra" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -12,3 +12,7 @@ App\Entity\Book:
       groups: [ 'book' ]
     score:
       groups: [ 'book' ]
+    readAt:
+      groups: [ 'book' ]
+    createdAt:
+      groups: [ 'book' ]

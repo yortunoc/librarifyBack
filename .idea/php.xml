@@ -376,6 +376,20 @@
       <path value="$PROJECT_DIR$/librarify/vendor/ramsey/collection" />
       <path value="$PROJECT_DIR$/librarify/vendor/ramsey/uuid" />
       <path value="$PROJECT_DIR$/librarify/vendor/cap-collectif/id-to-uuid" />
+      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/admin-bundle" />
+      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/exporter" />
+      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/doctrine-extensions" />
+      <path value="$PROJECT_DIR$/librarify/vendor/knplabs/knp-menu" />
+      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/block-bundle" />
+      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/twig-extensions" />
+      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/form-extensions" />
+      <path value="$PROJECT_DIR$/librarify/vendor/symfony/security-acl" />
+      <path value="$PROJECT_DIR$/librarify/vendor/symfony/expression-language" />
+      <path value="$PROJECT_DIR$/librarify/vendor/twig/string-extra" />
+      <path value="$PROJECT_DIR$/librarify/vendor/knplabs/knp-menu-bundle" />
+      <path value="$PROJECT_DIR$/librarify/vendor/symfony/asset" />
+      <path value="$PROJECT_DIR$/librarify/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/doctrine-orm-admin-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">

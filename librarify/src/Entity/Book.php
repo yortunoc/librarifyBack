@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Entity\Book\Score;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Ramsey\Uuid\Uuid;
@@ -23,21 +25,60 @@ class Book
 
     private ?string $description;
 
-    public function __construct(UuidInterface $uuid)
+    private ?DateTimeInterface $createdAt;
+
+    private ?DateTimeInterface $readAt;
+
+    public function __construct(
+        UuidInterface      $uuid,
+        string             $title,
+        ?string            $image,
+        ?string            $description,
+        ?Score             $score,
+        ?DateTimeInterface $readAt,
+        ?Collection        $categories
+    )
     {
         $this->id = $uuid;
-        $this->score = Score::create();
-        $this->categories = new ArrayCollection();
+        $this->title = $title;
+        $this->image = $image;
+        $this->description = $description ?? $description;;
+        $this->score = $score ?? Score::create();
+        $this->readAt = $readAt;
+        $this->categories = $categories ?? new ArrayCollection();
+        $this->createdAt = new DateTimeImmutable();
     }
 
-    public static function create(): self
+    public static function create(
+        string             $title,
+        ?string            $image,
+        ?string            $description,
+        ?Score             $score,
+        ?DateTimeInterface $readAt,
+        Category           ...$categories
+    ): self
     {
-        return new self(Uuid::uuid4());
+        return new self(
+            Uuid::uuid4(),
+            $title,
+            $image,
+            $description,
+            $score,
+            $readAt,
+            new ArrayCollection($categories)
+        );
     }
 
     public function getId(): UuidInterface
     {
         return $this->id;
+    }
+
+    public function setId(string $uuid): self
+    {
+        $this->id = Uuid::fromString($uuid);;
+
+        return $this;
     }
 
     public function getTitle(): ?string
@@ -114,16 +155,19 @@ class Book
     }
 
     public function update(
-        string $title,
-        ?string $image,
-        ?string $description,
-        ?Score $score,
+        string   $title,
+        ?string  $image,
+        ?string  $description,
+        ?Score   $score,
+        DateTimeInterface $readAt,
         Category ...$categories
-    ) {
+    )
+    {
         $this->title = $title;
         $this->image = $image;
         $this->description = $description;
         $this->score = $score;
+        $this->readAt = $readAt;
         $this->updateCategories(...$categories);
     }
 
@@ -141,5 +185,31 @@ class Book
     public function getDescription(): ?string
     {
         return $this->description;
+    }
+
+    public function getCreatedAt(): ?DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function isRead(): ?bool
+    {
+        return $this->readAt === null ? false : true;
+    }
+
+    public function markAsRead(DateTimeInterface $readAt): self
+    {
+        $this->readAt = $readAt;
+        return $this;
+    }
+
+    public function getReadAt(): ?DateTimeInterface
+    {
+        return $this->readAt;
+    }
+
+    public function __toString()
+    {
+        return $this->title ?? 'Libro';
     }
 }

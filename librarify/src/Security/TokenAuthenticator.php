@@ -14,6 +14,7 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 class TokenAuthenticator extends AbstractGuardAuthenticator
 {
     const TOKEN = 'LIBRARIFY';
+    const TOKEN_ADMIN = 'LIBRARIFY_ADMIN';
 
     /**
      * Called on every request to decide if this authenticator should be
@@ -36,10 +37,17 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        if (self::TOKEN !== $credentials) {
+        if (self::TOKEN !== $credentials and self::TOKEN_ADMIN !== $credentials) {
             return null;
         }
-        return new User();
+        $user= new User();
+        if (self::TOKEN === $credentials){
+            $user->setRoles(['ROLE_USER']);
+        }
+        if (self::TOKEN_ADMIN === $credentials){
+            $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
+        }
+        return $user;
     }
 
     public function checkCredentials($credentials, UserInterface $user)

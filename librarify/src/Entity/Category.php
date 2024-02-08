@@ -32,6 +32,13 @@ class Category
         return $this->id;
     }
 
+    public function setId(string $uuid): self
+    {
+        $this->id = Uuid::fromString($uuid);;
+
+        return $this;
+    }
+
     public function getName(): ?string
     {
         return $this->name;
@@ -71,4 +78,16 @@ class Category
 
         return $this;
     }
+
+    public function update(string $name): self {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name ?? 'Categoria';
+    }
+
+
 }

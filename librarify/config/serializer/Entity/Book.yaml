@@ -5,16 +5,16 @@ App\Entity\Book:
     title:
       groups: ['book']
     image:
-      groups: [ 'book' ]
+      groups: ['book']
     categories:
-      groups: [ 'book' ]
+      groups: ['book']
     authors:
-      groups: [ 'book' ]
+      groups: ['book']
     description:
-      groups: [ 'book' ]
+      groups: ['book']
     score:
-      groups: [ 'book' ]
+      groups: ['book']
     readAt:
-      groups: [ 'book' ]
+      groups: ['book']
     createdAt:
-      groups: [ 'book' ]
+      groups: ['book']

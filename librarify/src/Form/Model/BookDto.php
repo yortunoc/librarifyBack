@@ -13,6 +13,8 @@ class BookDto
     public ?string $base64Image = null;
     /** @var \App\Form\Model\CategoryDto[]|null */
     public ?array $categories = [];
+    /** @var \App\Form\Model\AuthorDto[]|null */
+    public ?array $authors = [];
     public ?DateTimeInterface $readAt = null;
 
     public function __construct()
@@ -29,6 +31,7 @@ class BookDto
     {
         $dto = new self();
         $dto->title = $book->getTitle();
+        $dto->score = $book->getScore()->getValue();
         return $dto;
     }
 
@@ -50,6 +53,13 @@ class BookDto
         return $this->categories;
     }
 
+    /**
+     * @return \App\Form\Model\AuthorDto[]|null
+     */
+    public function getAuthors(): ?array
+    {
+        return $this->authors;
+    }
 
     public function getScore(): ?int
     {

@@ -3,12 +3,15 @@
 namespace App\Entity;
 
 use App\Entity\Book\Score;
+use App\Event\Book\BookCreatedEvent;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use DomainException;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class Book
 {
@@ -31,6 +34,8 @@ class Book
     private ?DateTimeInterface $createdAt;
 
     private ?DateTimeInterface $readAt;
+
+    private array $domainEvents;
 
     /**
      * @param UuidInterface $uuid
@@ -82,7 +87,7 @@ class Book
         array $authors,
         array $categories
     ): self {
-        return new self(
+        $book = new self(
             Uuid::uuid4(),
             $title,
             $image,
@@ -92,6 +97,18 @@ class Book
             new ArrayCollection($authors),
             new ArrayCollection($categories)
         );
+        $book->addDomainEvent(new BookCreatedEvent($book->getId()));
+        return $book;
+    }
+
+    public function addDomainEvent(Event $event): void
+    {
+        $this->domainEvents[] = $event;
+    }
+
+    public function pullDomainEvents(): array
+    {
+        return $this->domainEvents;
     }
 
     public function getId(): UuidInterface
@@ -249,6 +266,21 @@ class Book
         $this->readAt = $readAt;
         $this->updateCategories(...$categories);
         $this->updateAuthors(...$authors);
+    }
+
+    public function patch(array $data): self
+    {
+        if (array_key_exists('score', $data)) {
+            $this->score = Score::create($data['score']);
+        }
+        if (array_key_exists('title', $data)) {
+            $title = $data['title'];
+            if ($title === null) {
+                throw new DomainException('Title cannot be null');
+            }
+            $this->title = $title;
+        }
+        return $this;
     }
 
     public function setScore(Score $score): self

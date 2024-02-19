@@ -250,6 +250,11 @@
       <path value="$PROJECT_DIR$/librariFy/vendor/league/flysystem-local" />
       <path value="$PROJECT_DIR$/librariFy/vendor/league/flysystem" />
       <path value="$PROJECT_DIR$/librariFy/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/vendor/symfony/profiler-pack" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php83" />
+      <path value="$PROJECT_DIR$/vendor/symfony/web-profiler-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/librarify/vendor/brick/math" />
       <path value="$PROJECT_DIR$/librarify/vendor/doctrine/instantiator" />
       <path value="$PROJECT_DIR$/librarify/vendor/doctrine/event-manager" />
       <path value="$PROJECT_DIR$/librarify/vendor/doctrine/common" />
@@ -264,6 +269,7 @@
       <path value="$PROJECT_DIR$/librarify/vendor/doctrine/collections" />
       <path value="$PROJECT_DIR$/librarify/vendor/doctrine/inflector" />
       <path value="$PROJECT_DIR$/librarify/vendor/doctrine/orm" />
+      <path value="$PROJECT_DIR$/librarify/vendor/cap-collectif/id-to-uuid" />
       <path value="$PROJECT_DIR$/librarify/vendor/doctrine/sql-formatter" />
       <path value="$PROJECT_DIR$/librarify/vendor/doctrine/lexer" />
       <path value="$PROJECT_DIR$/librarify/vendor/sebastian/resource-operations" />
@@ -290,6 +296,22 @@
       <path value="$PROJECT_DIR$/librarify/vendor/phpdocumentor/reflection-docblock" />
       <path value="$PROJECT_DIR$/librarify/vendor/phpdocumentor/reflection-common" />
       <path value="$PROJECT_DIR$/librarify/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/librarify/vendor/ramsey/uuid-doctrine" />
+      <path value="$PROJECT_DIR$/librarify/vendor/ramsey/collection" />
+      <path value="$PROJECT_DIR$/librarify/vendor/ramsey/uuid" />
+      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/admin-bundle" />
+      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/exporter" />
+      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/doctrine-extensions" />
+      <path value="$PROJECT_DIR$/librarify/vendor/knplabs/knp-menu" />
+      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/block-bundle" />
+      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/twig-extensions" />
+      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/form-extensions" />
+      <path value="$PROJECT_DIR$/librarify/vendor/symfony/security-acl" />
+      <path value="$PROJECT_DIR$/librarify/vendor/symfony/expression-language" />
+      <path value="$PROJECT_DIR$/librarify/vendor/twig/string-extra" />
+      <path value="$PROJECT_DIR$/librarify/vendor/knplabs/knp-menu-bundle" />
+      <path value="$PROJECT_DIR$/librarify/vendor/symfony/asset" />
+      <path value="$PROJECT_DIR$/librarify/vendor/symfony/translation" />
       <path value="$PROJECT_DIR$/librarify/vendor/composer" />
       <path value="$PROJECT_DIR$/librarify/vendor/psr/container" />
       <path value="$PROJECT_DIR$/librarify/vendor/psr/log" />
@@ -298,6 +320,7 @@
       <path value="$PROJECT_DIR$/librarify/vendor/league/flysystem" />
       <path value="$PROJECT_DIR$/librarify/vendor/nikic/php-parser" />
       <path value="$PROJECT_DIR$/librarify/vendor/twig/twig" />
+      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/doctrine-orm-admin-bundle" />
       <path value="$PROJECT_DIR$/librarify/vendor/twig/extra-bundle" />
       <path value="$PROJECT_DIR$/librarify/vendor/sensio/framework-extra-bundle" />
       <path value="$PROJECT_DIR$/librarify/vendor/league/flysystem-bundle" />
@@ -353,6 +376,7 @@
       <path value="$PROJECT_DIR$/librarify/vendor/symfony/polyfill-php81" />
       <path value="$PROJECT_DIR$/librarify/vendor/symfony/config" />
       <path value="$PROJECT_DIR$/librarify/vendor/symfony/form" />
+      <path value="$PROJECT_DIR$/librarify/vendor/symfony/web-profiler-bundle" />
       <path value="$PROJECT_DIR$/librarify/vendor/symfony/polyfill-intl-normalizer" />
       <path value="$PROJECT_DIR$/librarify/vendor/symfony/runtime" />
       <path value="$PROJECT_DIR$/librarify/vendor/symfony/filesystem" />
@@ -371,25 +395,6 @@
       <path value="$PROJECT_DIR$/librarify/vendor/symfony/security-http" />
       <path value="$PROJECT_DIR$/librarify/vendor/symfony/security-guard" />
       <path value="$PROJECT_DIR$/librarify/vendor/symfony/phpunit-bridge" />
-      <path value="$PROJECT_DIR$/librarify/vendor/brick/math" />
-      <path value="$PROJECT_DIR$/librarify/vendor/ramsey/uuid-doctrine" />
-      <path value="$PROJECT_DIR$/librarify/vendor/ramsey/collection" />
-      <path value="$PROJECT_DIR$/librarify/vendor/ramsey/uuid" />
-      <path value="$PROJECT_DIR$/librarify/vendor/cap-collectif/id-to-uuid" />
-      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/admin-bundle" />
-      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/exporter" />
-      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/doctrine-extensions" />
-      <path value="$PROJECT_DIR$/librarify/vendor/knplabs/knp-menu" />
-      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/block-bundle" />
-      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/twig-extensions" />
-      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/form-extensions" />
-      <path value="$PROJECT_DIR$/librarify/vendor/symfony/security-acl" />
-      <path value="$PROJECT_DIR$/librarify/vendor/symfony/expression-language" />
-      <path value="$PROJECT_DIR$/librarify/vendor/twig/string-extra" />
-      <path value="$PROJECT_DIR$/librarify/vendor/knplabs/knp-menu-bundle" />
-      <path value="$PROJECT_DIR$/librarify/vendor/symfony/asset" />
-      <path value="$PROJECT_DIR$/librarify/vendor/symfony/translation" />
-      <path value="$PROJECT_DIR$/librarify/vendor/sonata-project/doctrine-orm-admin-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">

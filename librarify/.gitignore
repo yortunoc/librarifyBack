@@ -3,21 +3,32 @@
 /.env.local
 /.env.local.php
 /.env.*.local
-/.env.local.*
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
+/public/storage/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
+.phpunit
 .phpunit.result.cache
+/phpunit.xml
 ###< symfony/phpunit-bridge ###
 
-###> phpunit/phpunit ###
-/phpunit.xml
-###< phpunit/phpunit ###
+###> friendsofphp/php-cs-fixer ###
+/.php_cs
+/.php_cs.cache
+###< friendsofphp/php-cs-fixer ###
 
-.idea/
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
 
 /vendor
+.idea/

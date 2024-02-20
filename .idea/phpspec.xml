@@ -41,6 +41,9 @@
       <PhpSpecSuiteConfiguration>
         <option name="myPath" value="$PROJECT_DIR$/librarify" />
       </PhpSpecSuiteConfiguration>
+      <PhpSpecSuiteConfiguration>
+        <option name="myPath" value="$PROJECT_DIR$/librarify" />
+      </PhpSpecSuiteConfiguration>
     </suites>
   </component>
 </project>

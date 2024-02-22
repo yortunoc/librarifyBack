@@ -34,7 +34,7 @@ security:
                     - lexik_jwt_authentication.jwt_token_authenticator
 
         main:
-            pattern: ^/login
+            pattern: ^/
             stateless: true
 #            guard:
 #                authenticators:
@@ -57,4 +57,9 @@ security:
     access_control:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: ROLE_USER }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/home, roles: ROLE_USER }
+        - { path: ^/books, roles: ROLE_USER }
+        - { path: ^/authors, roles: ROLE_USER }
+#        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/profile, roles: ROLE_USER }

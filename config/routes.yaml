@@ -1,6 +1,12 @@
 api_login_check:
   path: /api/login_check
 
+home:
+  path: /home
+
+registration:
+  path: /registration
+
 app_logout:
   path: /logout
 

@@ -1,8 +1,11 @@
 security:
+    enable_authenticator_manager: true
+        # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     encoders:
         App\Entity\User:
             algorithm: auto
-
+    password_hashers:
+        algorithm: auto
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         # used to reload user from session & other features (e.g. switch_user)
@@ -18,7 +21,7 @@ security:
         login:
             pattern:  ^/api/login
             stateless: true
-            anonymous: true
+#            anonymous: true
             json_login:
                 check_path: /api/login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success
@@ -29,6 +32,24 @@ security:
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
+
+        main:
+            pattern: ^/login
+            stateless: true
+#            guard:
+#                authenticators:
+#                    - lexik_jwt_authentication.jwt_token_authenticator
+            custom_authenticator: App\Security\AppCustomAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                always_remember_me: true
 
 
     # Easy way to control access for large sections of your site

@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Detalles libro{% endblock %}
+{% block menu %} {% endblock %}
+
+
+{% block body %}
+
+    <section class="vh-100" style="background-color: #c4e3f3;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-xl-10">
+                    <div class="card" style="border-radius: 1rem;">
+                        <div class="row g-0">
+                            <div class="col-md-6 col-lg-5 d-none d-md-block" >
+                                <img src="{{ asset('storage/default/' ~book.image  ) }}"
+                                     alt="No se pudo cargar la imagen del libro" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                            </div>
+                            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                                <div class="card-body p-4 p-lg-5 text-black">
+
+                                        <div class="form-outline mb-4">
+                                            <div class="col-md-12 align-items-center center-block">
+                                                <br>
+                                                <H4>Detalles del libro</H4>
+                                                <br>
+                                                <table class="table table-striped">
+                                                    <tbody>
+                                                    <tr>
+                                                        <th scope="row" class="table-dark"> Titulo</th>
+                                                        <th scope="row">{{ book.title  }}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row" class="table-dark">Descripcion</th>
+                                                        <th scope="row">{{ book.description  }}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row" class="table-dark">Autores</th>
+                                                        <th scope="row">{{ book.authors | join(', ') }}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row" class="table-dark">Categorias</th>
+                                                        <th scope="row">{{ book.categories | join(', ') }}</th>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

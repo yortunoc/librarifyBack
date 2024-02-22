@@ -1,2 +1,9 @@
 api_login_check:
   path: /api/login_check
+
+app_logout:
+  path: /logout
+
+details_book:
+  path: '/books/{id}'
+  controller: 'App\Controller\BookController::detailsBook'

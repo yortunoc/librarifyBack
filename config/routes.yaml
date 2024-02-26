@@ -11,5 +11,9 @@ app_logout:
   path: /logout
 
 details_book:
-  path: '/books/{id}'
-  controller: 'App\Controller\BookController::detailsBook'
+  path: /books/{id}
+  controller: App\Controller\BookController::detailsBook
+  
+save_comment:
+  path: /books/{id}/comments
+  controller: App\Controller\BookController::saveComment

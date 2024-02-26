@@ -1,0 +1,10 @@
+App\Entity\CommentsBook:
+  attributes:
+    id:
+      groups: ['book']
+    comment:
+      groups: ['book']
+    id_book:
+      groups: [ 'book' ]
+    id_user:
+      groups: [ 'book' ]

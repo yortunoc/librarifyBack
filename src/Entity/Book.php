@@ -27,6 +27,9 @@ class Book
     /** @var Collection|Author[] */
     private Collection $authors;
 
+    /** @var Collection|CommentsBook[] */
+    private Collection $comments;
+
     private Score $score;
 
     private ?string $description;
@@ -46,6 +49,7 @@ class Book
      * @param DateTimeInterface|null $readAt
      * @param Collection|Author[]|null $authors
      * @param Collection|Category[] |null $categories
+     * @param Collection|CommentsBook[] |null $comments
      */
     public function __construct(
         UuidInterface $uuid,
@@ -55,7 +59,8 @@ class Book
         ?Score $score,
         ?DateTimeInterface $readAt,
         ?Collection $authors,
-        ?Collection $categories
+        ?Collection $categories,
+        ?Collection $comments
     ) {
         $this->id = $uuid;
         $this->title = $title;
@@ -66,6 +71,7 @@ class Book
         $this->categories = $categories ?? new ArrayCollection();
         $this->authors = $authors ?? new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
+        $this->comments = $comments ?? new ArrayCollection();
     }
 
     /**
@@ -85,7 +91,8 @@ class Book
         ?Score $score,
         ?DateTimeInterface $readAt,
         array $authors,
-        array $categories
+        array $categories,
+        array $comments
     ): self {
         $book = new self(
             Uuid::uuid4(),
@@ -95,7 +102,8 @@ class Book
             $score,
             $readAt,
             new ArrayCollection($authors),
-            new ArrayCollection($categories)
+            new ArrayCollection($categories),
+            new ArrayCollection($comments)
         );
         $book->addDomainEvent(new BookCreatedEvent($book->getId()));
         return $book;
@@ -238,6 +246,47 @@ class Book
         }
     }
 
+    public function addComment(CommentsBook $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+        }
+
+        return $this;
+    }
+
+    public function removeComment(CommentsBook $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+        }
+
+        return $this;
+    }
+
+    public function updateComments(CommentsBook ...$comments)
+    {
+        /** @var CommentsBook[]|ArrayCollection */
+        $originalComments = new ArrayCollection();
+        foreach ($this->comments as $comment) {
+            $originalComments->add($comment);
+        }
+
+        // Remove comments
+        foreach ($originalComments as $originalComment) {
+            if (!\in_array($originalComment, $comments)) {
+                $this->removeComment($originalComment);
+            }
+        }
+
+        // Add authors
+        foreach ($comments as $newComment) {
+            if (!$originalComments->contains($newComment)) {
+                $this->addComment($newComment);
+            }
+        }
+    }
+
     /**
      * @param string $title
      * @param string|null $image
@@ -246,6 +295,7 @@ class Book
      * @param DateTimeInterface $readAt
      * @param array|Author[] $authors
      * @param array|Category[] $categories
+     * @param array|CommentsBook[] $comments
      * @return void
      */
     public function update(
@@ -255,7 +305,8 @@ class Book
         ?Score $score,
         ?DateTimeInterface $readAt,
         array $authors,
-        array $categories
+        array $categories,
+        array $comments
     ) {
         $this->title = $title;
         if ($image !== null) {
@@ -266,6 +317,7 @@ class Book
         $this->readAt = $readAt;
         $this->updateCategories(...$categories);
         $this->updateAuthors(...$authors);
+        $this->updateComments(...$comments);
     }
 
     public function patch(array $data): self

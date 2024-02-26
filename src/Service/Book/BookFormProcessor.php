@@ -79,6 +79,18 @@ class BookFormProcessor
             return [null, $form];
         }
 
+        $comments = [];
+        foreach ($bookDto->getComments() as $newCommentDto) {
+            $comment = null;
+            if ($newCommentDto->getId() !== null) {
+                $comment = ($this->getCategory)($newCommentDto->getId());
+            }
+            if ($comment === null) {
+                $comment = ($this->createCategory)($newCommentDto->getName());
+            }
+            $comments[] = $comment;
+        }
+
         $categories = [];
         foreach ($bookDto->getCategories() as $newCategoryDto) {
             $category = null;
@@ -126,7 +138,8 @@ class BookFormProcessor
                 Score::create($bookDto->getScore()),
                 $bookDto->getReadAt(),
                 $authors,
-                $categories
+                $categories,
+                $comments
             );
         }
         $this->bookRepository->save($book);

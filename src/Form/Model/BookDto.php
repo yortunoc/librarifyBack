@@ -11,6 +11,9 @@ class BookDto
     public ?string $description = null;
     public ?int $score = null;
     public ?string $base64Image = null;
+
+    /** @var \App\Form\Model\CommentsBookDto[]|null */
+    public ?array $comments = [];
     /** @var \App\Form\Model\CategoryDto[]|null */
     public ?array $categories = [];
     /** @var \App\Form\Model\AuthorDto[]|null */
@@ -71,6 +74,14 @@ class BookDto
     public function getDescription(): ?string
     {
         return $this->description;
+    }
+
+    /**
+     * @return \App\Form\Model\CommentsBookDto[]|null
+     */
+    public function getComments(): ?array
+    {
+        return $this->comments;
     }
 
     public function getReadAt(): ?DateTimeInterface

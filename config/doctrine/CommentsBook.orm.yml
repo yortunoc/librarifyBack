@@ -1,0 +1,31 @@
+App\Entity\CommentsBook:
+  type: entity
+  table: commentsBook
+  repositoryClass: App\Repository\CommentsBookRepository
+  id:
+    id:
+      type: uuid
+  fields:
+    comment:
+      type: string
+      scale: 0
+      unique: false
+      nullable: false
+      precision: 0
+    id_user:
+      type: uuid
+      scale: 0
+      unique: false
+      nullable: false
+      precision: 0
+      
+  manyToOne:
+    id_book:
+      targetEntity: App\Entity\Book
+      cascade: {  }
+      fetch: LAZY
+      mappedBy: comments
+      inversedBy: null
+      joinTable: {  }
+      orderBy: null
+  lifecycleCallbacks: {  }

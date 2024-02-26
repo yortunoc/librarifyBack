@@ -28,6 +28,7 @@ class UserFixtures extends Fixture
             'hola1234'
         );
         $user->setPassword($password);
+        $user->setRoles(['']);
         $manager->persist($user);
         $manager->flush();
     }

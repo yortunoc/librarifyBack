@@ -35,6 +35,14 @@ App\Entity\Book:
     embedded:
         score:
             class: App\Entity\Book\Score
+    OneToMany:
+      comments:
+        targetEntity: App\Entity\CommentsBook
+        cascade: {  }
+        fetch: LAZY
+        mappedBy: null
+        inversedBy: books
+        orderBy: null
     manyToMany:
         categories:
             targetEntity: App\Entity\Category

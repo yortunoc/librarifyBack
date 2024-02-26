@@ -80,6 +80,6 @@ class Author
 
     public function __toString()
     {
-        return $this->title ?? 'Autor';
+        return $this->name ?? 'Autor';
     }
 }

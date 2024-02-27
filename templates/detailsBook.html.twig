@@ -43,14 +43,25 @@
                                                 <div class="col-md-12">
                                                     {% for commentBook in commentsBook %}
                                                         <label style="padding-left: 20px"> - {{ commentBook }}
-                                                            {% if app.user !=null and app.user.id.toString() is same as(commentBook.getIdUser()) %}
+                                                            {% if is_granted('ROLE_ADMIN') %}
                                                                 <a href="{{ path('form_to_update_comment', {'id_book':book.id, 'id': commentBook.id} ) }}"
                                                                    class="btn btn-link" type="submit">editar</a>
+                                                                <a href="{{ path('delete_comment', {'id_book':book.id, 'id': commentBook.id} ) }}"
+                                                                   class="btn btn-link" onclick="return confirm('¿Estás seguro de que deseas eliminar el comentario?');"
+                                                                   type="submit">eliminar</a>
+                                                            {% else %}
+                                                                {% if app.user !=null and app.user.id.toString() is same as(commentBook.getIdUser()) %}
+                                                                    <a href="{{ path('form_to_update_comment', {'id_book':book.id, 'id': commentBook.id} ) }}"
+                                                                       class="btn btn-link" type="submit">editar</a>
+                                                                    <a href="{{ path('delete_comment', {'id_book':book.id, 'id': commentBook.id} ) }}"
+                                                                       class="btn btn-link" onclick="return confirm('¿Estás seguro de que deseas eliminar el comentario?');">
+                                                                        eliminar</a>
+                                                                {% endif %}
                                                             {% endif %}
                                                         </label><br>
                                                     {% endfor %}
                                                 </div>
-                                                {% if is_granted('ROLE_USER') %}
+                                                {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
                                                     <form action="{{ path('save_comment', {'id': book.id}) }}"
                                                           method="post">
                                                         <textarea name="comment" rows="2" cols="84"></textarea><br>

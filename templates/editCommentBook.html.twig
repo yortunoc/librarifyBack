@@ -40,7 +40,7 @@
                                             </table>
                                             <h5>Editar comentario</h5>
                                             <div class="form-outline mb-4">
-                                                {% if is_granted('ROLE_USER') %}
+{#                                                {% if is_granted('ROLE_USER') %}#}
                                                     <form action="{{ path('update_comment', {'id_book':book.id, 'id': commentBook.id}) }}"
                                                           method="post">
                                                         <textarea name="comment" rows="2" cols="84">{{ commentBook.comment}} </textarea><br>
@@ -49,7 +49,7 @@
                                                         </button>
                                                         <button class="btn btn-outline-dark" href="/books/{{ commentBook.getIdBook() }}">Cancelar</button>
                                                     </form>
-                                                {% endif %}
+{#                                                {% endif %}#}
                                             </div>
                                         </div>
                                     </div>

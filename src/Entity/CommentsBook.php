@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use DateTimeImmutable;
+use DateTimeInterface;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
@@ -16,6 +18,24 @@ class CommentsBook
 
     private string $id_user;
 
+    private ?DateTimeInterface $createdAt;
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreatedAt(): ?DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param DateTimeInterface|null $createdAt
+     */
+    public function setCreatedAt(?DateTimeInterface $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
 
     public function __construct(UuidInterface $uuid, string $comment, Book $book, string $id_user)
     {
@@ -23,6 +43,7 @@ class CommentsBook
         $this->comment = $comment;
         $this->id_book = $book;
         $this->id_user = $id_user;
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public static function create(string $comment, Book $book, string $id_user)

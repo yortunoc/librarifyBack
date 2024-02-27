@@ -6,9 +6,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements UserInterface
 {
-    private $username;
+    private string $username;
 
-    private $roles = [];
+    private array $roles = [];
 
     /**
      * A visual identifier that represents this user.

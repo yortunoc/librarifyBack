@@ -20,3 +20,5 @@ App\Entity\User:
       unique: false
       nullable: false
       precision: 0
+    roles:
+      type: array

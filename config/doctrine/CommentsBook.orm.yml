@@ -18,6 +18,9 @@ App\Entity\CommentsBook:
       unique: false
       nullable: false
       precision: 0
+    createdAt:
+      type: datetime
+      nullable: true
       
   manyToOne:
     id_book:

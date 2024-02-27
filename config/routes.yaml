@@ -25,3 +25,7 @@ form_to_update_comment:
 update_comment:
   path: /books/{id_book}/comments/{id}
   controller: App\Controller\BookController::editComment
+
+delete_comment:
+  path: /books/{id_book}/comments/{id}/delete
+  controller: App\Controller\BookController::deleteComment

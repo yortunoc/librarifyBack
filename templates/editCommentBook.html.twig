@@ -38,26 +38,17 @@
                                                 </tr>
                                                 </tbody>
                                             </table>
-                                            <H5>Comentarios</H5>
+                                            <h5>Editar comentario</h5>
                                             <div class="form-outline mb-4">
-                                                <div class="col-md-12">
-                                                    {% for commentBook in commentsBook %}
-                                                        <label style="padding-left: 20px"> - {{ commentBook }}
-                                                            {% if app.user !=null and app.user.id.toString() is same as(commentBook.getIdUser()) %}
-                                                                <a href="{{ path('form_to_update_comment', {'id_book':book.id, 'id': commentBook.id} ) }}"
-                                                                   class="btn btn-link" type="submit">editar</a>
-                                                            {% endif %}
-                                                        </label><br>
-                                                    {% endfor %}
-                                                </div>
                                                 {% if is_granted('ROLE_USER') %}
-                                                    <form action="{{ path('save_comment', {'id': book.id}) }}"
+                                                    <form action="{{ path('update_comment', {'id_book':book.id, 'id': commentBook.id}) }}"
                                                           method="post">
-                                                        <textarea name="comment" rows="2" cols="84"></textarea><br>
-                                                        <button class="btn btn-outline-primary" type="submit">Agregar
+                                                        <textarea name="comment" rows="2" cols="84">{{ commentBook.comment}} </textarea><br>
+                                                        <button class="btn btn-outline-primary" type="submit">Editar
                                                             Comentario
                                                         </button>
-                                                </form>
+                                                        <button class="btn btn-outline-dark" href="/books/{{ commentBook.getIdBook() }}">Cancelar</button>
+                                                    </form>
                                                 {% endif %}
                                             </div>
                                         </div>

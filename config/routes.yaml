@@ -17,3 +17,11 @@ details_book:
 save_comment:
   path: /books/{id}/comments
   controller: App\Controller\BookController::saveComment
+
+form_to_update_comment:
+  path: /books/{id_book}/comments/{id}/update
+  controller: App\Controller\BookController::form_to_update_comment
+
+update_comment:
+  path: /books/{id_book}/comments/{id}
+  controller: App\Controller\BookController::editComment

@@ -2,17 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Book;
 use App\Repository\BookRepository;
 use App\Repository\CommentsBookRepository;
 use App\Service\Book\GetBook;
 use App\Service\CommentBook\CommentBookFormProcessor;
-use App\Service\CommentBook\CreateCommentBook;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\CommentBook\GetCommentBook;
 use FOS\RestBundle\View\View;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,11 +30,15 @@ class BooksController extends AbstractController
     /**
      * @Route("/books/{id}")
      */
-    public function detailsBook(string $id, GetBook $getBook, CommentsBookRepository $commentsBookRepository)
+    public function detailsBook(string   $id, GetBook $getBook, CommentsBookRepository $commentsBookRepository,
+                                Security $security)
     {
         try {
             $book = ($getBook)($id);
             $commentsBook = $commentsBookRepository->findBy(['id_book' => $book->getId()]);
+            if ($security->isGranted('ROLE_USER')) {
+                $user = $security->getUser();
+            }
         } catch (Exception $exception) {
             return View::create('Book not found', Response::HTTP_BAD_REQUEST);
         }
@@ -57,6 +57,35 @@ class BooksController extends AbstractController
         [$commentBook, $error] = ($commentBookFormProcessor)($request, $id, $user->getId());
         $book = ($getBook)($id);
         $commentsBook = $commentsBookRepository->findBy(['id_book' => $book->getId()]);
-        return $this::render('detailsBook.html.twig', ['book' => $book, 'commentsBook' => $commentsBook]);
+        return $this::render('detailsBook.html.twig', ['book' => $book, 'commentsBook' => $commentsBook,
+            "user_id" => $user->getId()]);
+    }
+
+    /**
+     * @Route("/books/{id_book}/comments/{id}")
+     */
+    public function editComment(Request $request, string $id_book, string $id,
+                                CommentBookFormProcessor $commentBookFormProcessor,
+                                Security $security, GetBook $getBook, CommentsBookRepository $commentsBookRepository)
+    {
+        if ($security->isGranted('ROLE_USER')) {
+            $user = $security->getUser();
+        }
+        [$commentBook, $error] = ($commentBookFormProcessor)($request, $id_book, $user->getId(), $id);
+        $book = ($getBook)($id_book);
+        $commentsBook = $commentsBookRepository->findBy(['id_book' => $book->getId()]);
+        return $this::render('detailsBook.html.twig', ['book' => $book, 'commentsBook' => $commentsBook,
+            "user_id" => $user->getId()]);
+    }
+
+    /**
+     * @Route("/books/{id_book}/comments/{id}/update")
+     */
+    public function form_to_update_comment(string  $id_book, string $id, GetCommentBook $getCommentBook,
+                                           GetBook $getBook)
+    {
+        $commentBook = ($getCommentBook)($id);
+        $book = ($getBook)($id_book);
+        return $this::render('editCommentBook.html.twig', ['book' => $book, 'commentBook' => $commentBook]);
     }
 }

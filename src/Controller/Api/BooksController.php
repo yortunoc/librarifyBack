@@ -8,6 +8,7 @@ use App\Service\Book\BookFormProcessor;
 use App\Service\Book\DeleteBook;
 use App\Service\Book\GetBook;
 use App\Service\CommentBook\CommentBookFormProcessor;
+use App\Service\CommentBook\GetCommentBook;
 use Exception;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -66,15 +67,15 @@ class BooksController extends AbstractFOSRestController
         BookFormProcessor $bookFormProcessor,
         Request $request
     ) {
-//        try {
+        try {
             [$book, $error] = ($bookFormProcessor)($request, $id);
             $statusCode = $book ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST;
             $data = $book ?? $error;
             return View::create($data, $statusCode);
-//        } catch (Throwable $t) {
-//            dump($t);
-//            return View::create('Book not found', Response::HTTP_BAD_REQUEST);
-//        }
+        } catch (Throwable $t) {
+            dump($t);
+            return View::create('Book not found', Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -118,12 +119,12 @@ class BooksController extends AbstractFOSRestController
 
 
     /**
-     * @Rest\Post(path="/books/{id}/comments")
+     * @Rest\Post(path="/books/{id_book}/comments")
      * @Rest\View(serializerGroups={"book"}, serializerEnableMaxDepthChecks=true)
      */
     public function postCommentAction(
-        string $id,
-        Request               $request,
+        string $id_book,
+        Request  $request,
         CommentBookFormProcessor $commentBookFormProcessor,
         Security $security
     )
@@ -131,7 +132,32 @@ class BooksController extends AbstractFOSRestController
         if ($security->isGranted('IS_AUTHENTICATED_FULLY')) {
             $user = $security->getUser();
         }
-        [$category, $error] = ($commentBookFormProcessor)($request, $id, $user->getId());
+        try {
+            [$category, $error] = ($commentBookFormProcessor)($request, $id_book, $user->getId());
+            $statusCode = $category ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST;
+            $data = $category ?? $error;
+            return View::create($data, $statusCode);
+        } catch (Throwable $t) {
+            dump($t);
+            return View::create('Comment not found', Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    /**
+     * @Rest\Post(path="/books/{id_book}/comments/{id}")
+     * @Rest\View(serializerGroups={"book"}, serializerEnableMaxDepthChecks=true)
+     */
+    public function editCommentAction(
+        string $id_book,
+        string $id,
+        Request  $request,
+        CommentBookFormProcessor $commentBookFormProcessor,
+        Security $security
+    ) {
+        if ($security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $user = $security->getUser();
+        }
+        [$category, $error] = ($commentBookFormProcessor)($request, $id_book, $user->getId(), $id);
         $statusCode = $category ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST;
         $data = $category ?? $error;
         return View::create($data, $statusCode);

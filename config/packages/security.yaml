@@ -59,7 +59,8 @@ security:
         - { path: ^/api, roles: ROLE_USER }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/home, roles: ROLE_USER }
-        - { path: ^/books, roles: ROLE_USER }
+        - { path: ^/books, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/authors, roles: ROLE_USER }
+        - { path: ^/admin/, roles: ROLE_USER }
 #        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/profile, roles: ROLE_USER }

@@ -21,11 +21,11 @@ class UserFixtures extends Fixture
     {
         $user = new User(
             Uuid::uuid4(),
-            'gerardo@latteandcode.com'
+            'yurybuk@buk.cl'
         );
         $password = $this->userPasswordEncoder->encodePassword(
             $user,
-            'hola1234'
+            '123'
         );
         $user->setPassword($password);
         $user->setRoles(['']);

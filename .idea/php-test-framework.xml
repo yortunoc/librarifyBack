@@ -6,6 +6,8 @@
         <cache>
           <versions>
             <info id="Local/home/yury/LibrarifyBack/vendor/autoload.php" version="9.6.4" />
+            <info id="interpreter-441ffd9b-7d80-4d02-b40b-c2b62ead1551" version="9.6.16" />
+            <info id="interpreter-53416b92-dabd-4554-9e6e-a314f0131942" version="9.6.16" />
           </versions>
         </cache>
       </tool>

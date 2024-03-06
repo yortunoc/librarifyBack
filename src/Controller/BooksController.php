@@ -50,7 +50,7 @@ class BooksController extends AbstractController
     public function save_comment(Request  $request, string $id, CommentBookFormProcessor $commentBookFormProcessor,
                                  Security $security, GetBook $getBook, CommentsBookRepository $commentsBookRepository)
     {
-        if ($security->isGranted('ROLE_USER')) {
+        if ($security->isGranted('ROLE_USER') or $security->isGranted('ROLE_ADMIN')) {
             $user = $security->getUser();
         }
         [$commentBook, $error] = ($commentBookFormProcessor)($request, $id, $user->getId());
@@ -66,7 +66,7 @@ class BooksController extends AbstractController
                                 CommentBookFormProcessor $commentBookFormProcessor,
                                 Security $security, GetBook $getBook, CommentsBookRepository $commentsBookRepository)
     {
-        if ($security->isGranted('ROLE_USER')) {
+        if ($security->isGranted('ROLE_USER') or $security->isGranted('ROLE_ADMIN')) {
             $user = $security->getUser();
         }
         [$commentBook, $error] = ($commentBookFormProcessor)($request, $id_book, $user->getId(), $id);

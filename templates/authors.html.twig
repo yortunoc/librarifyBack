@@ -11,10 +11,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-        </tr>
+        {% for author in authors %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ author }}</td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 {% endblock %}

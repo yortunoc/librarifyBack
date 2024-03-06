@@ -54,13 +54,13 @@ class Book
     public function __construct(
         UuidInterface $uuid,
         string $title,
-        ?string $image,
-        ?string $description,
-        ?Score $score,
-        ?DateTimeInterface $readAt,
-        ?Collection $authors,
-        ?Collection $categories,
-        ?Collection $comments
+        ?string $image = null,
+        ?string $description = null,
+        ?Score $score = null,
+        ?DateTimeInterface $readAt = null,
+        ?Collection $authors = null,
+        ?Collection $categories = null,
+        ?Collection $comments = null
     ) {
         $this->id = $uuid;
         $this->title = $title;
@@ -86,13 +86,13 @@ class Book
      */
     public static function create(
         string $title,
-        ?string $image,
-        ?string $description,
-        ?Score $score,
-        ?DateTimeInterface $readAt,
-        array $authors,
-        array $categories,
-        array $comments
+        ?string $image = null,
+        ?string $description = null,
+        ?Score $score = null,
+        ?DateTimeInterface $readAt = null,
+        array $authors = [],
+        array $categories = [],
+        array $comments = []
     ): self {
         $book = new self(
             Uuid::uuid4(),

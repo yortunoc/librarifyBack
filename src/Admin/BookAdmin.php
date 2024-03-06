@@ -16,7 +16,7 @@ final class BookAdmin extends AbstractAdmin
 
     public function createNewInstance(): object
     {
-        return Book::create('', null, null, null, null, [], []);
+        return Book::create('', null, null, null, null, [], [], []);
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter): void

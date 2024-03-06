@@ -4,8 +4,3 @@ sonata_admin:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
 #            - { type: sonata.block.service.text, settings: { content: '<a href="{{ path("app_logout") }}">Cerrar sesión</a>' }, position: left }
-
-sonata_block:
-    blocks:
-        sonata.admin.block.admin_list:
-            contexts: [admin]

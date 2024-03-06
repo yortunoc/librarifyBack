@@ -15,6 +15,7 @@ use App\Service\Category\CreateCategory;
 use App\Service\Category\GetCategory;
 use App\Service\FileUploader;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -56,69 +57,25 @@ class BookFormProcessor
 
     public function __invoke(Request $request, ?string $bookId = null): array
     {
-        $book = null;
-        $bookDto = null;
 
-        if ($bookId === null) {
-            $bookDto = BookDto::createEmpty();
-        } else {
-            $book = ($this->getBook)($bookId);
-            $bookDto = BookDto::createFromBook($book);
-            foreach ($book->getCategories() as $category) {
-                $bookDto->categories[] = CategoryDto::createFromCategory($category);
-            }
-        }
+        [$bookDto, $book] = $this->getBooksEntity($bookId);
 
-        $content = json_decode($request->getContent(), true);
-        $form = $this->formFactory->create(BookFormType::class, $bookDto);
-        $form->submit($content);
-        if (!$form->isSubmitted()) {
-            return [null, 'Form is not submitted'];
-        }
-        if (!$form->isValid()) {
-            return [null, $form];
-        }
+        $form = $this->getForm($request, $bookDto);
 
-        $comments = [];
-        foreach ($bookDto->getComments() as $newCommentDto) {
-            $comment = null;
-            if ($newCommentDto->getId() !== null) {
-                $comment = ($this->getCategory)($newCommentDto->getId());
-            }
-            if ($comment === null) {
-                $comment = ($this->createCategory)($newCommentDto->getName());
-            }
-            $comments[] = $comment;
-        }
+        if (!$form->isSubmitted()) return [null, 'Form is not submitted'];
 
-        $categories = [];
-        foreach ($bookDto->getCategories() as $newCategoryDto) {
-            $category = null;
-            if ($newCategoryDto->getId() !== null) {
-                $category = ($this->getCategory)($newCategoryDto->getId());
-            }
-            if ($category === null) {
-                $category = ($this->createCategory)($newCategoryDto->getName());
-            }
-            $categories[] = $category;
-        }
-
-        $authors = [];
-        foreach ($bookDto->getAuthors() as $newAuthorDto) {
-            $author = null;
-            if ($newAuthorDto->getId() !== null) {
-                $author = ($this->getAuthor)($newAuthorDto->getId());
-            }
-            if ($author === null) {
-                $author = ($this->createAuthor)($newAuthorDto->getName());
-            }
-            $authors[] = $author;
-        }
+        if (!$form->isValid()) return [null, $form];
 
         $filename = null;
         if ($bookDto->getBase64Image()) {
             $filename = $this->fileUploader->uploadBase64File($bookDto->base64Image);
         }
+
+        $comments = $this->addComments($bookDto);
+
+        $categories = $this->addCategories($bookDto);
+
+        $authors = $this->addAuthors($bookDto);
 
         if ($book === null) {
             $book = Book::create(
@@ -128,7 +85,8 @@ class BookFormProcessor
                 Score::create($bookDto->getScore()),
                 $bookDto->getReadAt(),
                 $authors,
-                $categories
+                $categories,
+                $comments
             );
         } else {
             $book->update(
@@ -143,9 +101,105 @@ class BookFormProcessor
             );
         }
         $this->bookRepository->save($book);
+
         foreach ($book->pullDomainEvents() as $event) {
             $this->eventDispatcher->dispatch($event);
         }
         return [$book, null];
+    }
+
+
+    /**
+     * @param BookDto $bookDto
+     * @return array
+     */
+    public function addCategories(BookDto $bookDto): array
+    {
+        $categories = [];
+        foreach ($bookDto->getCategories() as $newCategoryDto) {
+            $category = null;
+            if ($newCategoryDto->getId() !== null) {
+                $category = ($this->getCategory)($newCategoryDto->getId());
+            }
+            if ($category === null) {
+                $category = ($this->createCategory)($newCategoryDto->getName());
+            }
+            $categories[] = $category;
+        }
+        return $categories;
+    }
+
+    /**
+     * @param BookDto $bookDto
+     * @return array
+     */
+    public function addAuthors(BookDto $bookDto): array
+    {
+        $authors = [];
+        foreach ($bookDto->getAuthors() as $newAuthorDto) {
+            $author = null;
+            if ($newAuthorDto->getId() !== null) {
+                $author = ($this->getAuthor)($newAuthorDto->getId());
+            }
+
+            if ($author === null) {
+                $author = ($this->createAuthor)($newAuthorDto->getName());
+            }
+            $authors[] = $author;
+        }
+        return $authors;
+    }
+
+    /**
+     * @param BookDto $bookDto
+     * @return array
+     */
+    public function addComments(BookDto $bookDto): array
+    {
+        $comments = [];
+        foreach ($bookDto->getComments() as $newCommentDto) {
+            $comment = null;
+            if ($newCommentDto->getId() !== null) {
+                $comment = ($this->getCategory)($newCommentDto->getId());
+            }
+            if ($comment === null) {
+                $comment = ($this->createCategory)($newCommentDto->getName());
+            }
+            $comments[] = $comment;
+        }
+        return $comments;
+    }
+
+    /**
+     * @param string|null $bookId
+     * @param Book $book
+     * @return array
+     */
+    public function getBooksEntity(?string $bookId, Book $book = null): array
+    {
+        if ($bookId === null) {
+            $bookDto = BookDto::createEmpty();
+        } else {
+            $book = ($this->getBook)($bookId);
+            $bookDto = BookDto::createFromBook($book);
+            foreach ($book->getCategories() as $category) {
+                $bookDto->categories[] = CategoryDto::createFromCategory($category);
+            }
+
+        }
+        return array($bookDto, $book);
+    }
+
+    /**
+     * @param Request $request
+     * @param BookDto $bookDto
+     * @return FormInterface
+     */
+    public function getForm(Request $request, BookDto $bookDto): FormInterface
+    {
+        $content = json_decode($request->getContent(), true);
+        $form = $this->formFactory->create(BookFormType::class, $bookDto);
+        $form->submit($content);
+        return $form;
     }
 }

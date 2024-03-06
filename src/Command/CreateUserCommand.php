@@ -38,7 +38,7 @@ class CreateUserCommand extends Command
         $password = $input->getOption('password');
         $roles = $input->getOption('roles');
         ($this->createUser)($username, $password, $roles);
-        $output->writeln('User with username: ' . $username . 'and password: ' . $password . 'was created');
+        $output->writeln('User with username: ' . $username . ' and password: ' . $password . 'was created');
         return Command::SUCCESS;
     }
 }

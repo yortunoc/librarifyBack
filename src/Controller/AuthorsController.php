@@ -2,21 +2,19 @@
 
 namespace App\Controller;
 
-use App\Entity\Book;
-use App\Repository\BookRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
+use App\Repository\AuthorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AuthorsController extends AbstractController
 {
 
-    #[Route(path: '/authors', name: 'authors_list')]
-    public function showauthors()
+    /**
+     * @Route("/authors")
+     */
+    public function showauthors(AuthorRepository $authorRepository)
     {
-        return $this->render('authors.html.twig');
+        $authors= $authorRepository->findAll();
+        return $this->render('authors.html.twig', ['authors' => $authors]);
     }
 }
